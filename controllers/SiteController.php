@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\SampleForm;
 
 class SiteController extends Controller
 {
@@ -96,5 +97,15 @@ class SiteController extends Controller
     public function actionSay($message = 'Hello')
     {
         return $this->render('say',['message' => $message]);
+    }
+
+    public function actionForm(){
+        $model = new SampleForm();
+
+        if($model->load(Yii::$app->request->post()) && $model->validate()){
+            return $this->render('form-confirm', ['model' => $model]);
+        }else{
+            return $this->render('form', ['model' => $model]);
+        }
     }
 }
